@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: alertmanager
@@ -20,6 +20,7 @@ spec:
         args:
           - '--config.file=/etc/alertmanager/config.yml'
           - '--storage.path=/alertmanager'
+          - '--web.external-url=http://prometheus.plab-mini.skplanet.com'
         ports:
         - name: alertmanager
           containerPort: 9093

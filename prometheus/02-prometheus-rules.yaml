@@ -1,9 +1,4 @@
 apiVersion: v1
-kind: Namespace
-metadata:
-  name: monitoring
----
-apiVersion: v1
 kind: ConfigMap
 metadata:
   name: prometheus-rules
@@ -100,4 +95,13 @@ data:
           labels:
             team: devops
 
+#      - name: my demo alert
+#        rules:
+#        - alert: High Pod Memory
+#          expr: sum(container_memory_usage_bytes) > 1
+#          for: 1m
+#          labels:
+#            severity: slack
+#          annotations:
+#            summary: High Memory Usage
 

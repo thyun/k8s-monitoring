@@ -1,27 +1,28 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: grafana
+  name: monitoring-ingress
   namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: "nginx"
+#    nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
   rules:
-  - host: grafana.yourdomain.com
+  - host: grafana.plab-mini.skplanet.com
     http:
       paths:
       - path: /
         backend:
           serviceName: grafana
           servicePort: 3000
-  - host: prometheus.yourdomain.com
+  - host: prometheus.plab-mini.skplanet.com
     http:
       paths:
       - path: /
         backend:
           serviceName: prometheus-service
           servicePort: 8080
-  - host: alertmanager.yourdomain.com
+  - host: alertmanager.plab-mini.skplanet.com
     http: 
       paths:
       - path: /
