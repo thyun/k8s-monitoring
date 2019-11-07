@@ -8,21 +8,21 @@ metadata:
 #    nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
   rules:
-  - host: grafana.plab-mini.skplanet.com
+  - host: grafana.mini-plab.com
     http:
       paths:
       - path: /
         backend:
           serviceName: grafana
           servicePort: 3000
-  - host: prometheus.plab-mini.skplanet.com
+  - host: prometheus.mini-plab.com
     http:
       paths:
       - path: /
         backend:
-          serviceName: prometheus-service
+          serviceName: prometheus
           servicePort: 8080
-  - host: alertmanager.plab-mini.skplanet.com
+  - host: alertmanager.mini-plab.com
     http: 
       paths:
       - path: /

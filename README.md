@@ -1,4 +1,5 @@
-# Kubernetes monitoring and alerting in less than 5 minutes
+# Kubernetes monitoring
+참조: https://github.com/Thakurvaibhav/k8s/tree/master/monitoring
 
 Kubelet natively exposes cadvisor metrics at https://kubernetes.default.svc:443/api/v1/nodes/{node-name}/proxy/metrics/cadvisor and we can use a prometheus server to scrape this endpoint. These metrics can then be visualized using Grafana. Metrics can alse be scraped from pods and service endpoints if they expose metircs on /metrics (as in the case of nginx-ingress-controller), alternatively you can sepcify custom scrape target in the prometheus config map. 
 
