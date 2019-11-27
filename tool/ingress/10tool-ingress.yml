@@ -20,3 +20,10 @@ spec:
         backend:
           serviceName: kafka-manager
           servicePort: 8080
+  - host: elastic.mini-plab.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx
+          servicePort: 80

@@ -1,6 +1,19 @@
 # Kubernetes monitoring
 참조: https://github.com/Thakurvaibhav/k8s/tree/master/monitoring
 
+# 접근
+## Monitoring
+- http://prometheus.mini-plab.com
+- http://alertmanager.mini-plab.com
+- http://grafana.mini-plab.com
+
+## Tool
+- head: http://elastic.mini-plab.com/head/index.html?base_uri=http://elastic.mini-plab.com
+- bigdesk: http://elastic.mini-plab.com/bigdesk/index.html?endpoint=http://elastic.mini-plab.com
+- kibana: http://kibana.mini-plab.com
+- kafka-manager: http://kafka-manager.mini-plab.com
+
+# Old
 Kubelet natively exposes cadvisor metrics at https://kubernetes.default.svc:443/api/v1/nodes/{node-name}/proxy/metrics/cadvisor and we can use a prometheus server to scrape this endpoint. These metrics can then be visualized using Grafana. Metrics can alse be scraped from pods and service endpoints if they expose metircs on /metrics (as in the case of nginx-ingress-controller), alternatively you can sepcify custom scrape target in the prometheus config map. 
 
 Some Important metrics which are not exposed by the kubelet, can be fetched using kube-state-metrics and then pulled by prometheus. 
