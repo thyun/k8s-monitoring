@@ -27,3 +27,25 @@ spec:
         backend:
           serviceName: nginx
           servicePort: 80
+
+  - host: kibana.plab-k8s.skplanet.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kibana
+          servicePort: 5601
+  - host: kafka-manager.plab-k8s.skplanet.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kafka-manager
+          servicePort: 8080
+  - host: elastic.plab-k8s.skplanet.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx
+          servicePort: 80

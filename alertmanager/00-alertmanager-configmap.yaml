@@ -8,7 +8,7 @@ data:
     global:
       resolve_timeout: 5m
       slack_api_url: "https://hooks.slack.com/services/XXXX"
-      victorops_api_url: "<your_victorops_hook>"
+    #  victorops_api_url: "<your_victorops_hook>"
 
     templates:
     - '/etc/alertmanager-templates/*.tmpl'
@@ -17,16 +17,16 @@ data:
       group_wait: 10s
       group_interval: 1m
       repeat_interval: 12h
-      receiver: slack-alert
+      receiver: webhook-alert
       routes:
-      - match:
-          team: devops
-        receiver: devops
-        continue: true 
-      - match: 
-          team: dev
-        receiver: dev
-        continue: true
+    #  - match:
+    #      team: devops
+    #    receiver: devops
+    #    continue: true 
+    #  - match: 
+    #      team: dev
+    #    receiver: dev
+    #    continue: true
 
     receivers:
     - name: 'default'
@@ -56,4 +56,8 @@ data:
     - name: "slack-alert"
       slack_configs:
       - text: "hello~~~"
+
+    - name: "webhook-alert"
+      webhook_configs:
+      - url: "http://172.21.104.13:8090"
  

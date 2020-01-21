@@ -15,6 +15,21 @@ spec:
         backend:
           serviceName: prometheus
           servicePort: 8080
+  - host: prometheus.plab-k8s.skplanet.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: prometheus
+          servicePort: 8080
+  - host: prometheus.plab-aws.skplanet.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: prometheus
+          servicePort: 8080
+
   - host: alertmanager.mini-plab.com
     http: 
       paths:
@@ -22,7 +37,36 @@ spec:
         backend:
           serviceName: alertmanager
           servicePort: 9093
+  - host: alertmanager.plab-k8s.skplanet.com
+    http: 
+      paths:
+      - path: /
+        backend:
+          serviceName: alertmanager
+          servicePort: 9093
+  - host: alertmanager.plab-aws.skplanet.com
+    http: 
+      paths:
+      - path: /
+        backend:
+          serviceName: alertmanager
+          servicePort: 9093
+
   - host: grafana.mini-plab.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: grafana
+          servicePort: 3000
+  - host: grafana.plab-k8s.skplanet.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: grafana
+          servicePort: 3000
+  - host: grafana.plab-aws.skplanet.com
     http:
       paths:
       - path: /
