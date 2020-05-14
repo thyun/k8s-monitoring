@@ -20,6 +20,7 @@ spec:
           args:
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
+            - "--web.external-url=http://prometheus.plab-k8s.skplanet.com"
             - "--web.enable-lifecycle"
             - "--storage.tsdb.no-lockfile"
           ports:
