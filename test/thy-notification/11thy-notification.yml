@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: thy-notification
+  namespace: monitoring
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app: thy-notification
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thy-notification
+  namespace: monitoring
+  labels:
+    app: thy-notification
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thy-notification
+  template:
+    metadata:
+      labels:
+        app: thy-notification
+    spec:
+      containers:
+      - name: thy-notification
+        image: dev.pcr.kr/plab/thy-notification
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: configmap
+          mountPath: /etc/thy-notification-config
+      volumes:
+      - name: configmap
+        configMap:
+          name: thy-notification-config
+
+

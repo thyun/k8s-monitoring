@@ -1,0 +1,14 @@
+kind: ConfigMap
+metadata:
+  name: thy-notification-config
+  namespace: monitoring
+apiVersion: v1
+data:
+  init.sh: |-
+    #!/bin/bash
+    cp /etc/thy-notification-configmap/application.yml /app/config/
+
+  application.yml: |-
+    server:
+      port: 8080
+
