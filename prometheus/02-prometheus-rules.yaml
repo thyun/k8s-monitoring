@@ -50,7 +50,7 @@ data:
 
         - alert: High Memory Usage of Container 
           annotations: 
-            summary: Container named {{$labels.container}} in {{$labels.pod}} in {{$labels.namespace}} is using more than 75% of Memory Limit
+            summary: Container named {{$labels.container_name}} in {{$labels.pod_name}} in {{$labels.namespace}} is using more than 75% of Memory Limit
           expr: | 
             ((( sum(container_memory_usage_bytes{image!="",container_name!="POD", namespace!="kube-system"}) by (namespace,container_name,pod_name)  / sum(container_spec_memory_limit_bytes{image!="",container_name!="POD",namespace!="kube-system"}) by (namespace,container_name,pod_name) ) * 100 ) < +Inf ) > 75
           for: 5m
@@ -97,10 +97,11 @@ data:
 
       - name: my demo alert
         rules:
-        - alert: High Pod Memory
+        - alert: My demo alert
           expr: sum(container_memory_usage_bytes) > 1
           for: 1m
           labels:
+            team: devops
             severity: slack
           annotations:
             summary: High Memory Usage

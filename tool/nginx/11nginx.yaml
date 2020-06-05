@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: monitoring
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: monitoring
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: dev.pcr.kr/plab/nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: configmap
+          mountPath: /etc/nginx-config
+        - name: configmap
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: default.conf
+      volumes:
+      - name: configmap
+        configMap:
+          name: nginx-config
+
+

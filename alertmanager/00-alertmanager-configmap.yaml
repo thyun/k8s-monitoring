@@ -16,7 +16,7 @@ data:
       group_by: ['alertname', 'cluster', 'service']
       group_wait: 10s
       group_interval: 1m
-      repeat_interval: 12h
+      repeat_interval: 1h
       receiver: webhook-alert
       routes:
     #  - match:

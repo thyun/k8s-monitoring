@@ -1,0 +1,20 @@
+kind: ConfigMap
+metadata:
+  name: kibana-config
+  namespace: monitoring
+apiVersion: v1
+data:
+  init.sh: |-
+    #!/bin/bash
+    echo "kibana-config init.sh start"
+    echo "kibana-config init.sh end"
+
+  kibana.yml: |-
+    server.name: kibana
+    server.host: "0"
+    elasticsearch.url: http://elasticsearch.default:9200
+    elasticsearch.username: elastic
+    elasticsearch.password: changeme
+    xpack.monitoring.ui.container.elasticsearch.enabled: false
+
+    #server.port: 8080

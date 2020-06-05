@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: elasticsearch-metrics
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: elasticsearch-metrics
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: elasticsearch-metrics
+    spec:
+      containers:
+      - image: thyun/es-monitor:latest
+        name: elasticsearch-metrics
+        env:
+        - name: ES_METRICS_CLUSTER_URL
+          value: http://elasticsearch.default:9200
+        - name: ES_METRICS_INDEX_NAME
+          value: elasticsearch_metrics-search1
+        - name: ES_METRICS_MONITORING_CLUSTER_URL
+          value: http://elasticsearch.default:9200
+#        ports:
+#        - containerPort: 8080
+#          name: elasticsearch-metrics
+        volumeMounts:
+        - name: configmap
+          mountPath: /etc/elasticsearch-metrics-configmap
+      volumes:
+      - name: configmap
+        configMap:
+          name: elasticsearch-metrics-config
+

@@ -1,0 +1,14 @@
+kind: ConfigMap
+metadata:
+  name: elasticsearch-metrics-config
+  namespace: monitoring
+apiVersion: v1
+data:
+  init.sh: |-
+    #!/bin/bash
+    #cp /etc/elasticsearch-metrics-configmap/application.yml /app/config/
+
+  application.yml: |-
+    server:
+      port: 8080
+
