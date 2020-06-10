@@ -46,16 +46,16 @@ data:
             sum(increase(kube_pod_container_status_restarts_total{namespace!="kube-system",pod_template_hash=""}[1m])) by (pod,namespace,container) > 0
           for: 0m
           labels:
-            team: dev
+            team: devops
 
         - alert: High Memory Usage of Container 
           annotations: 
             summary: Container named {{$labels.container_name}} in {{$labels.pod_name}} in {{$labels.namespace}} is using more than 75% of Memory Limit
           expr: | 
-            ((( sum(container_memory_usage_bytes{image!="",container_name!="POD", namespace!="kube-system"}) by (namespace,container_name,pod_name)  / sum(container_spec_memory_limit_bytes{image!="",container_name!="POD",namespace!="kube-system"}) by (namespace,container_name,pod_name) ) * 100 ) < +Inf ) > 75
+            ((( sum(container_memory_usage_bytes{image!="",container_name!="POD",container_name!="",namespace!="kube-system"}) by (namespace,container_name,pod_name)  / sum(container_spec_memory_limit_bytes{image!="",container_name!="POD",container_name!="",namespace!="kube-system"}) by (namespace,container_name,pod_name) ) * 100 ) < +Inf ) > 75
           for: 5m
           labels: 
-            team: dev
+            team: devops
 
         - alert: High CPU Usage of Container 
           annotations: 
@@ -64,7 +64,7 @@ data:
             ((sum(irate(container_cpu_usage_seconds_total{image!="",container_name!="POD", namespace!="kube-system"}[30s])) by (namespace,container_name,pod_name) / sum(container_spec_cpu_quota{image!="",container_name!="POD", namespace!="kube-system"} / container_spec_cpu_period{image!="",container_name!="POD", namespace!="kube-system"}) by (namespace,container_name,pod_name) ) * 100)  > 75
           for: 5m
           labels: 
-            team: dev
+            team: devops
 
       - name: Nodes
         rules:
@@ -94,6 +94,50 @@ data:
           for: 5m
           labels:
             team: devops
+
+      - name: Volume
+        rules:
+        - alert: PersistentVolumeUsageCritical
+          annotations:
+            message: The PersistentVolume claimed by {{ $labels.persistentvolumeclaim
+              }} in Namespace {{ $labels.namespace }} is only {{ printf "%0.2f" $value
+              }}% free.
+            runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeusagecritical
+          expr: |
+            kubelet_volume_stats_available_bytes / kubelet_volume_stats_capacity_bytes * 100 < 10
+          for: 1m
+          labels:
+            team: devops
+            severity: critical
+        - alert: PersistentVolumeFullInFourDays
+          annotations:
+            message: Based on recent sampling, the PersistentVolume claimed by {{ $labels.persistentvolumeclaim
+              }} in Namespace {{ $labels.namespace }} is expected to fill up within four
+              days. Currently {{ printf "%0.2f" $value }}% is available.
+            runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumefullinfourdays
+          expr: |
+            100 * (
+              kubelet_volume_stats_available_bytes
+                /
+              kubelet_volume_stats_capacity_bytes
+            ) < 50
+            and
+            predict_linear(kubelet_volume_stats_available_bytes[6h], 4 * 24 * 3600) < 0
+          for: 5m
+          labels:
+            team: devops
+            severity: critical
+        - alert: PersistentVolumeErrors
+          annotations:
+            message: The persistent volume {{ $labels.persistentvolume }} has status {{
+              $labels.phase }}.
+            runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeerrors
+          expr: |
+            kube_persistentvolume_status_phase{phase=~"Failed|Pending",job="kube-state-metrics"} > 0
+          for: 5m
+          labels:
+            team: devops
+            severity: critical
 
       - name: my demo alert
         rules:
