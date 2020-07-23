@@ -1,7 +1,7 @@
 kind: ConfigMap
 metadata:
   name: elasticsearch-metrics-config
-  namespace: monitoring
+#  namespace: monitoring
 apiVersion: v1
 data:
   init.sh: |-

@@ -3,7 +3,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: kafka-manager
-  namespace: monitoring
+#  namespace: monitoring
 spec:
   selector:
     app: kafka-manager
@@ -16,7 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kafka-manager
-  namespace: monitoring
+#  namespace: monitoring
 spec:
   replicas: 1
   selector:

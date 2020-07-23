@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/
 kind: Ingress
 metadata:
   name: tool-ingress
-  namespace: monitoring
+#  namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
@@ -21,32 +21,18 @@ spec:
         backend:
           serviceName: kafka-manager
           servicePort: 8080
-  - host: elastic.mini-plab.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: nginx
-          servicePort: 80
 
-  - host: kibana.plab-k8s.skplanet.com
+  - host: kibana.plab-dev2.skplanet.com
     http:
       paths:
       - path: /
         backend:
           serviceName: kibana
           servicePort: 5601
-  - host: kafka-manager.plab-k8s.skplanet.com
+  - host: kafka-manager.plab-dev2.skplanet.com
     http:
       paths:
       - path: /
         backend:
           serviceName: kafka-manager
           servicePort: 8080
-  - host: elastic.plab-k8s.skplanet.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: nginx
-          servicePort: 80
