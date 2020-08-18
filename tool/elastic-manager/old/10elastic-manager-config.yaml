@@ -1,13 +1,13 @@
 kind: ConfigMap
 metadata:
-  name: nginx-config
+  name: elastic-manager-config
   namespace: monitoring
 apiVersion: v1
 data:
   init.sh: |-
     #!/bin/bash
-    echo "nginx-config init.sh start"
-    echo "nginx-config init.sh end"
+    echo "elastic-manager-config init.sh start"
+    echo "elastic-manager-config init.sh end"
 
   default.conf: |-
     server {

@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: prometheus
   namespace: monitoring
 spec:
+  serviceName: prometheus
   replicas: 1
   selector:
     matchLabels:
@@ -29,10 +30,12 @@ spec:
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus/
-            - name: prometheus-storage-volume
-              mountPath: /prometheus/
             - name: rules-volume
               mountPath: /etc/prometheus-rules
+            - name: pv-data
+              mountPath: /prometheus/
+#            - name: prometheus-storage-volume
+#              mountPath: /prometheus/
       securityContext:
         fsGroup: 2000
         runAsNonRoot: true
@@ -42,10 +45,19 @@ spec:
           configMap:
             defaultMode: 420
             name: prometheus-server-conf
-        - name: prometheus-storage-volume
-          emptyDir: {}
+#        - name: prometheus-storage-volume
+#          emptyDir: {}
 #          persistentVolumeClaim:
 #            claimName: prometheus-claim
         - name: rules-volume
           configMap:
             name: prometheus-rules
+  volumeClaimTemplates:
+  - metadata:
+      name: pv-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
+

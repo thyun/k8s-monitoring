@@ -10,7 +10,7 @@ This project is based on https://github.com/Thakurvaibhav/k8s/tree/master/monito
 ## Setup access
 - kubectl apply -f ingress
 - Modify OS hosts file
-  - Location of hosts file: MacOS - /etc/hosts, Windows - C:\Windows\System32\drivers\etc\hosts
+  - Location of hosts file: Linux/MacOS - /etc/hosts, Windows - C:\Windows\System32\drivers\etc\hosts
   - ex) 192.168.99.100 mini-plab.com
 
 ## Setup grafana

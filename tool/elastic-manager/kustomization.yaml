@@ -1,0 +1,11 @@
+#namespace: monitoring
+configMapGenerator:
+- name: elastic-manager-config
+  files:
+  - config/init.sh
+  - config/default.conf
+generatorOptions:
+  disableNameSuffixHash: true
+resources:
+- 11elastic-manager.yaml
+
