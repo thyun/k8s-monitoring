@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: dev.pcr.kr/plab/nginx
+        image: dev.pcr.kr/plab/elastic-manager
         ports:
         - containerPort: 80
         volumeMounts:
