@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: node-exporter
-  namespace: monitoring
+  namespace: kube-system
   labels:
     name: node-exporter
 spec:
@@ -10,6 +10,7 @@ spec:
     metadata:
       labels:
         name: node-exporter
+        app: node-exporter
       annotations:
          prometheus.io/scrape: "true"
          prometheus.io/port: "9100"

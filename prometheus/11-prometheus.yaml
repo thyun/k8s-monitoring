@@ -30,7 +30,7 @@ spec:
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus/
-            - name: rules-volume
+            - name: prometheus-rules-volume
               mountPath: /etc/prometheus-rules
             - name: pv-data
               mountPath: /prometheus/
@@ -44,12 +44,12 @@ spec:
         - name: prometheus-config-volume
           configMap:
             defaultMode: 420
-            name: prometheus-server-conf
+            name: prometheus-config
 #        - name: prometheus-storage-volume
 #          emptyDir: {}
 #          persistentVolumeClaim:
 #            claimName: prometheus-claim
-        - name: rules-volume
+        - name: prometheus-rules-volume
           configMap:
             name: prometheus-rules
   volumeClaimTemplates:

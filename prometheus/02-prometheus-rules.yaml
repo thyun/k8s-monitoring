@@ -97,7 +97,7 @@ data:
 
       - name: Volume
         rules:
-        - alert: PersistentVolumeUsageCritical
+        - alert: Persistent Volume Usage Critical
           annotations:
             message: The PersistentVolume claimed by {{ $labels.persistentvolumeclaim
               }} in Namespace {{ $labels.namespace }} is only {{ printf "%0.2f" $value
@@ -109,25 +109,21 @@ data:
           labels:
             team: devops
             severity: critical
-        - alert: PersistentVolumeFullInFourDays
+        - alert: Persistent Volume Full In Four Days
           annotations:
             message: Based on recent sampling, the PersistentVolume claimed by {{ $labels.persistentvolumeclaim
               }} in Namespace {{ $labels.namespace }} is expected to fill up within four
               days. Currently {{ printf "%0.2f" $value }}% is available.
             runbook_url: https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumefullinfourdays
           expr: |
-            100 * (
-              kubelet_volume_stats_available_bytes
-                /
-              kubelet_volume_stats_capacity_bytes
-            ) < 50
+            100 * (kubelet_volume_stats_available_bytes / kubelet_volume_stats_capacity_bytes) < 50
             and
             predict_linear(kubelet_volume_stats_available_bytes[6h], 4 * 24 * 3600) < 0
           for: 5m
           labels:
             team: devops
             severity: critical
-        - alert: PersistentVolumeErrors
+        - alert: Persistent Volume Errors
           annotations:
             message: The persistent volume {{ $labels.persistentvolume }} has status {{
               $labels.phase }}.
@@ -139,14 +135,14 @@ data:
             team: devops
             severity: critical
 
-      - name: my demo alert
-        rules:
-        - alert: My demo alert
-          expr: sum(container_memory_usage_bytes) > 1
-          for: 1m
-          labels:
-            team: devops
-            severity: slack
-          annotations:
-            summary: High Memory Usage
+#      - name: my demo alert
+#        rules:
+#        - alert: My demo alert
+#          expr: sum(container_memory_usage_bytes) > 1
+#          for: 1m
+#          labels:
+#            team: devops
+#            severity: slack
+#          annotations:
+#            summary: High Memory Usage
 

@@ -5,7 +5,6 @@ This project is based on https://github.com/Thakurvaibhav/k8s/tree/master/monito
 ## Setup container
 - kubectl apply -f namespace.yaml
 - kubectl apply -f kubernetes-dashboard; kubectl apply -f prometheus; kubectl apply -f alertmanager; kubectl apply -f grafana
-- kubectl apply -f kube-state-metrics
  	
 ## Setup access
 - kubectl apply -f ingress
